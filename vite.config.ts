@@ -1,6 +1,7 @@
-import react from '@vitejs/plugin-react';
-
 import { defineConfig } from 'vite';
+
+import react from '@vitejs/plugin-react';
+import Pages from 'vite-plugin-pages';
 
 import { dependencies } from './package.json';
 
@@ -22,7 +23,7 @@ function renderChunks(deps: Record<string, string>) {
 }
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), Pages()],
   build: {
     sourcemap: true,
     rollupOptions: {
