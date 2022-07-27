@@ -1,6 +1,7 @@
-import { Link, Page, Text } from '@geist-ui/core';
+import { Link, Text } from '@geist-ui/core';
 import { useEffect, useState } from 'react';
 
+import Page from '~/components/page';
 import genString from '~/util/genString';
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
   }, []);
 
   return (
-    <Page dotBackdrop>
+    <Page>
       <Text h2>Welcome to</Text>
       <Text h1>Topify</Text>
       {/* TODO: add description here */}

@@ -47,5 +47,6 @@ module.exports = {
         aspects: ['invalidHref', 'preferButton'],
       },
     ],
+    'react/no-unescaped-entities': 'off',
   },
 };
