@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 
 import react from '@vitejs/plugin-react';
 import Pages from 'vite-plugin-pages';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 import { dependencies } from './package.json';
 
@@ -23,7 +24,7 @@ function renderChunks(deps: Record<string, string>) {
 }
 
 export default defineConfig({
-  plugins: [react(), Pages()],
+  plugins: [react(), Pages(), tsconfigPaths()],
   build: {
     sourcemap: true,
     rollupOptions: {
@@ -38,4 +39,5 @@ export default defineConfig({
   css: {
     devSourcemap: true,
   },
+  envPrefix: 'PUBLIC_',
 });

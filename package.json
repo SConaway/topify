@@ -11,7 +11,8 @@
     "type-check": "tsc",
     "upgrade:yarn": "yarn set version latest",
     "upgrade": "yarn upgrade-interactive ; yarn upgrade:yarn",
-    "vdev": "vercel dev"
+    "vdev": "vercel dev",
+    "dev:vercel": "vercel dev"
   },
   "dependencies": {
     "@geist-ui/core": "^2.3.8",
