@@ -2,7 +2,7 @@
   "name": "vite-reactts-eslint-prettier",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port ${PORT:-5000}",
     "build": "tsc && vite build",
     "serve": "vite preview",
     "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --quiet --fix --ignore-path ./.gitignore",
@@ -10,7 +10,8 @@
     "lint": "yarn lint:format && yarn lint:fix ",
     "type-check": "tsc",
     "upgrade:yarn": "yarn set version latest",
-    "upgrade": "yarn upgrade-interactive ; yarn upgrade:yarn"
+    "upgrade": "yarn upgrade-interactive ; yarn upgrade:yarn",
+    "vdev": "vercel dev"
   },
   "dependencies": {
     "@geist-ui/core": "^2.3.8",
@@ -20,10 +21,12 @@
     "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
+    "@types/node": "^18.6.1",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.30.7",
     "@typescript-eslint/parser": "^5.30.7",
+    "@vercel/node": "^2.4.5",
     "@vitejs/plugin-react": "^2.0.0",
     "eslint": "^8.20.0",
     "eslint-config-prettier": "^8.5.0",
@@ -35,8 +38,10 @@
     "pre-commit": "^1.2.2",
     "prettier": "^2.7.1",
     "typescript": "^4.7.4",
+    "vercel": "^27.2.0",
     "vite": "^3.0.2",
-    "vite-plugin-pages": "^0.25.0"
+    "vite-plugin-pages": "^0.25.0",
+    "vite-tsconfig-paths": "^3.5.0"
   },
   "pre-commit": "lint",
   "license": "MIT",
