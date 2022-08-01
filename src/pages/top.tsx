@@ -8,14 +8,18 @@ function App() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
-  const [authError, setAuthError] = useState(false);
+  const [authError, setAuthError] = useState('');
+  const [fetchError, setFetchError] = useState('');
 
-  let [searchParams, setSearchParams] = useSearchParams();
+  const [accessToken, setAccessToken] = useState('');
 
-  useEffect(() => {
-    const success = searchParams.get('success');
-    const state = searchParams.get('state');
-    const accessToken = searchParams.get('access_token');
+  let [searchParams, _setSearchParams] = useSearchParams();
+  // let [searchParams, setSearchParams] = useSearchParams();
+
+  const handleAuth = () => {
+    const successFromParams = searchParams.get('success');
+    const stateFromParams = searchParams.get('state');
+    const accessTokenFromParams = searchParams.get('access_token');
     // const tokenType = searchParams.get('token_type');
     // const expiresIn = searchParams.get('expires_in');
     // const scope = searchParams.get('scope');
@@ -30,40 +34,74 @@ function App() {
     }
 
     if (
-      !success ||
-      !state ||
-      !accessToken
+      !successFromParams ||
+      !stateFromParams ||
+      !accessTokenFromParams
       // || !scope
       // || !refreshToken
     ) {
-      console.warn('missing part of authentication, error time');
-      setAuthError(true);
+      const error = 'missing part of authentication';
+      console.warn(error);
+      setAuthError(error);
       return;
     }
 
-    if (state !== localStorage.getItem('randomString')) {
-      console.warn('state does not match random string, error time');
-      setAuthError(true);
+    if (stateFromParams !== localStorage.getItem('randomString')) {
+      const error = 'state does not match random string';
+      console.warn(error);
+      setAuthError(error);
       return;
     }
 
     // hide params
-    setSearchParams('');
+    // setSearchParams('');
 
-    // TODO: actual things here
+    setAccessToken(accessTokenFromParams);
+  };
+
+  const getData = async () => {
+    if (!accessToken) {
+      const error = 'no access token found';
+      console.warn(error);
+      setFetchError(error);
+      return;
+    }
+
+    const response = await fetch(`/api/top?accessToken=${accessToken}`);
+
+    if (!response.ok) {
+      const error = await response.text();
+      console.warn(error);
+      setFetchError(error);
+      return;
+    }
+
+    const data = await response.json();
+    console.log(data);
 
     setLoading(false);
+  };
+
+  useEffect(() => {
+    (async () => {
+      handleAuth();
+      await getData();
+    })();
   }, []);
 
   return (
     <Page>
-      {loading ? (
+      {authError ? (
+        <>
+          <AuthError authError={authError} />
+        </>
+      ) : fetchError ? (
+        <>
+          <FetchError fetchError={fetchError} retryAction={getData} />
+        </>
+      ) : loading ? (
         <>
           <Loading>Loading</Loading>
-        </>
-      ) : authError ? (
-        <>
-          <AuthError />
         </>
       ) : (
         <p>hi</p>
@@ -72,7 +110,7 @@ function App() {
   );
 }
 
-function AuthError() {
+function AuthError({ authError }: { authError: String }) {
   const { bindings } = useModal(true);
   const navigate = useNavigate();
 
@@ -81,12 +119,38 @@ function AuthError() {
       <Modal.Title>Authentication Error</Modal.Title>
       <Modal.Subtitle>Something went wrong.</Modal.Subtitle>
       <Modal.Content>
-        <Text small>Please try again.</Text>
+        <Text>Please try again.</Text>
+        <Text small>{authError}</Text>
       </Modal.Content>
       {/* <Modal.Action passive onClick={() => setVisible(false)}>
         Cancel
       </Modal.Action> */}
       <Modal.Action onClick={() => navigate('/')}>Try Again</Modal.Action>
+    </Modal>
+  );
+}
+
+function FetchError({
+  fetchError,
+  retryAction,
+}: {
+  fetchError: String;
+  retryAction: () => void;
+}) {
+  const { bindings } = useModal(true);
+
+  return (
+    <Modal {...bindings} disableBackdropClick keyboard={false}>
+      <Modal.Title>Fetch Error</Modal.Title>
+      <Modal.Subtitle>Something went wrong.</Modal.Subtitle>
+      <Modal.Content>
+        <Text>Please try again.</Text>
+        <Text small>{fetchError}</Text>
+      </Modal.Content>
+      {/* <Modal.Action passive onClick={() => setVisible(false)}>
+        Cancel
+      </Modal.Action> */}
+      <Modal.Action onClick={retryAction}>Try Again</Modal.Action>
     </Modal>
   );
 }
