@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, UserConfig } from 'vite';
 
 import react from '@vitejs/plugin-react';
 import Pages from 'vite-plugin-pages';
@@ -23,21 +23,33 @@ function renderChunks(deps: Record<string, string>) {
   return chunks;
 }
 
-export default defineConfig({
-  plugins: [react(), Pages(), tsconfigPaths()],
-  build: {
-    sourcemap: true,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: globalVendorPackages,
-          ...renderChunks(dependencies),
+export default defineConfig(({ mode }) => {
+  let baseConfig: UserConfig = {
+    plugins: [react(), Pages(), tsconfigPaths()],
+    build: {
+      sourcemap: true,
+    },
+    css: {
+      devSourcemap: true,
+    },
+    envPrefix: 'PUBLIC_',
+  };
+
+  // in prod, chunk; in dev, don't
+  if (mode === 'development') return baseConfig;
+  else
+    return {
+      ...baseConfig,
+      build: {
+        ...baseConfig.build,
+        rollupOptions: {
+          output: {
+            manualChunks: {
+              vendor: globalVendorPackages,
+              ...renderChunks(dependencies),
+            },
+          },
         },
       },
-    },
-  },
-  css: {
-    devSourcemap: true,
-  },
-  envPrefix: 'PUBLIC_',
+    };
 });
