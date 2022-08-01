@@ -12,7 +12,7 @@
     "upgrade:yarn": "yarn set version latest",
     "upgrade": "yarn upgrade-interactive ; yarn upgrade:yarn",
     "vdev": "vercel dev",
-    "dev:vercel": "vercel dev"
+    "dev:vercel": "vercel dev --local-config ./vercel-dev.json"
   },
   "dependencies": {
     "@geist-ui/core": "^2.3.8",
