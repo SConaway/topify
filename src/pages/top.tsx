@@ -11,44 +11,37 @@ function App() {
   const [authError, setAuthError] = useState(false);
 
   let [searchParams, setSearchParams] = useSearchParams();
-  const success = searchParams.get('success');
-  const state = searchParams.get('state');
-  const accessToken = searchParams.get('access_token');
-  const tokenType = searchParams.get('token_type');
-  const expiresIn = searchParams.get('expires_in');
-  const scope = searchParams.get('scope');
-  const refreshToken = searchParams.get('refresh_token');
-
-  if (!localStorage.getItem('randomString')) {
-    console.warn('No random string found in localStorage, heading to main page');
-    navigate('/');
-  }
 
   useEffect(() => {
-    setLoading(false);
+    const success = searchParams.get('success');
+    const state = searchParams.get('state');
+    const accessToken = searchParams.get('access_token');
+    // const tokenType = searchParams.get('token_type');
+    // const expiresIn = searchParams.get('expires_in');
+    // const scope = searchParams.get('scope');
+    // const refreshToken = searchParams.get('refresh_token');
+
+    console.log(localStorage.getItem('randomString'));
+
+    if (!localStorage.getItem('randomString')) {
+      console.warn('No random string found in localStorage, heading back to main page');
+      navigate('/');
+      return;
+    }
 
     if (
       !success ||
       !state ||
-      !accessToken ||
-      !tokenType ||
-      !expiresIn ||
-      !scope ||
-      !refreshToken
+      !accessToken
+      // || !scope
+      // || !refreshToken
     ) {
       console.warn('missing part of authentication, error time');
       setAuthError(true);
       return;
     }
 
-    // store all the things in localStorage if state matches random string
-    if (state === localStorage.getItem('randomString')) {
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('tokenType', tokenType);
-      localStorage.setItem('expiresIn', expiresIn);
-      localStorage.setItem('scope', scope);
-      localStorage.setItem('refreshToken', refreshToken);
-    } else {
+    if (state !== localStorage.getItem('randomString')) {
       console.warn('state does not match random string, error time');
       setAuthError(true);
       return;
@@ -57,14 +50,9 @@ function App() {
     // hide params
     setSearchParams('');
 
-    // log things!
-    console.log('success:', success);
-    console.log('state:', state);
-    console.log('accessToken:', accessToken);
-    console.log('tokenType:', tokenType);
-    console.log('expiresIn:', expiresIn);
-    console.log('scope:', scope);
-    console.log('refreshToken:', refreshToken);
+    // TODO: actual things here
+
+    setLoading(false);
   }, []);
 
   return (

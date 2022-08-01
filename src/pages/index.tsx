@@ -8,14 +8,10 @@ function App() {
   const [randomString, setRandomString] = useState('');
 
   useEffect(() => {
-    // if string was in local storage, use it; otherwise, make a new one and save it
-    const storedString = localStorage.getItem('randomString');
-    if (storedString) {
-      setRandomString(storedString);
-    } else {
+    if (!randomString) {
       const newString = genString(16);
-      localStorage.setItem('randomString', newString);
       setRandomString(newString);
+      localStorage.setItem('randomString', newString);
     }
   }, []);
 
