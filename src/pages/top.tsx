@@ -13,7 +13,7 @@ function App() {
 
   const [accessToken, setAccessToken] = useState('');
 
-  let [searchParams, _setSearchParams] = useSearchParams();
+  const [searchParams, _setSearchParams] = useSearchParams();
   // let [searchParams, setSearchParams] = useSearchParams();
 
   const handleAuth = () => {
@@ -83,21 +83,27 @@ function App() {
   };
 
   useEffect(() => {
-    (async () => {
+    const doThings = async () => {
       handleAuth();
       await getData();
-    })();
+    };
+
+    doThings().catch(console.error);
   }, []);
 
   return (
     <Page>
       {authError ? (
         <>
-          <AuthError authError={authError} />
+          <Error
+            error={authError}
+            title="Authentication Error"
+            retryAction={() => navigate('/')}
+          />
         </>
       ) : fetchError ? (
         <>
-          <FetchError fetchError={fetchError} retryAction={getData} />
+          <Error error={fetchError} title="Fetch Error" retryAction={getData} />
         </>
       ) : loading ? (
         <>
@@ -110,46 +116,25 @@ function App() {
   );
 }
 
-function AuthError({ authError }: { authError: String }) {
-  const { bindings } = useModal(true);
-  const navigate = useNavigate();
-
-  return (
-    <Modal {...bindings} disableBackdropClick keyboard={false}>
-      <Modal.Title>Authentication Error</Modal.Title>
-      <Modal.Subtitle>Something went wrong.</Modal.Subtitle>
-      <Modal.Content>
-        <Text>Please try again.</Text>
-        <Text small>{authError}</Text>
-      </Modal.Content>
-      {/* <Modal.Action passive onClick={() => setVisible(false)}>
-        Cancel
-      </Modal.Action> */}
-      <Modal.Action onClick={() => navigate('/')}>Try Again</Modal.Action>
-    </Modal>
-  );
-}
-
-function FetchError({
-  fetchError,
+function Error({
+  error,
+  title,
   retryAction,
 }: {
-  fetchError: String;
+  error: string;
+  title: string;
   retryAction: () => void;
 }) {
   const { bindings } = useModal(true);
 
   return (
     <Modal {...bindings} disableBackdropClick keyboard={false}>
-      <Modal.Title>Fetch Error</Modal.Title>
+      <Modal.Title>{title}</Modal.Title>
       <Modal.Subtitle>Something went wrong.</Modal.Subtitle>
       <Modal.Content>
         <Text>Please try again.</Text>
-        <Text small>{fetchError}</Text>
+        <Text small>{error}</Text>
       </Modal.Content>
-      {/* <Modal.Action passive onClick={() => setVisible(false)}>
-        Cancel
-      </Modal.Action> */}
       <Modal.Action onClick={retryAction}>Try Again</Modal.Action>
     </Modal>
   );
