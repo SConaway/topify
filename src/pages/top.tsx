@@ -1,5 +1,5 @@
-import { Loading, Modal, Text, useModal } from '@geist-ui/core';
 import { useEffect, useState } from 'react';
+import { Loading, Modal, Text, useModal, Select } from '@geist-ui/core';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import Page from '~/components/page';
@@ -13,6 +13,8 @@ function App() {
 
   const [accessToken, setAccessToken] = useState('');
 
+  const [period, setPeriod] = useState('medium_term');
+
   const [searchParams, _setSearchParams] = useSearchParams();
   // let [searchParams, setSearchParams] = useSearchParams();
 
@@ -25,7 +27,7 @@ function App() {
     // const scope = searchParams.get('scope');
     // const refreshToken = searchParams.get('refresh_token');
 
-    console.log(localStorage.getItem('randomString'));
+    // console.log(localStorage.getItem('randomString'));
 
     if (!localStorage.getItem('randomString')) {
       console.warn('No random string found in localStorage, heading back to main page');
@@ -67,7 +69,7 @@ function App() {
       return;
     }
 
-    const response = await fetch(`/api/top?accessToken=${accessToken}`);
+    const response = await fetch(`/api/top?accessToken=${accessToken}&period=${period}`);
 
     if (!response.ok) {
       const error = await response.text();
@@ -83,13 +85,21 @@ function App() {
   };
 
   useEffect(() => {
+    handleAuth();
+  }, []);
+
+  useEffect(() => {
+    if (!accessToken) {
+      console.log('no access token found, probably will rerun soon');
+      return;
+    }
+
     const doThings = async () => {
-      handleAuth();
       await getData();
     };
 
     doThings().catch(console.error);
-  }, []);
+  }, [period, accessToken]);
 
   return (
     <Page>
@@ -110,7 +120,21 @@ function App() {
           <Loading>Loading</Loading>
         </>
       ) : (
-        <p>hi</p>
+        <>
+          <Text h1>Topify</Text>
+          <Text>Select a period:</Text>
+          <Select
+            placeholder="Choose one"
+            value={period}
+            onChange={(newValue) => setPeriod(newValue as string)} // only one because no `multiple` prop
+          >
+            <Select.Option value="short_term">Short Term (last ~4 weeks)</Select.Option>
+            <Select.Option value="medium_term">
+              Medium Term (last ~6 months, default)
+            </Select.Option>
+            <Select.Option value="long_term">Long Term (all history)</Select.Option>
+          </Select>
+        </>
       )}
     </Page>
   );
