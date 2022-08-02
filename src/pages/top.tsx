@@ -1,7 +1,8 @@
+import { Loading, Modal, Select, Text, useModal } from '@geist-ui/core';
 import { useEffect, useState } from 'react';
-import { Loading, Modal, Text, useModal, Select } from '@geist-ui/core';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
+import Error from '~/components/error';
 import Page from '~/components/page';
 
 function App() {
@@ -137,30 +138,6 @@ function App() {
         </>
       )}
     </Page>
-  );
-}
-
-function Error({
-  error,
-  title,
-  retryAction,
-}: {
-  error: string;
-  title: string;
-  retryAction: () => void;
-}) {
-  const { bindings } = useModal(true);
-
-  return (
-    <Modal {...bindings} disableBackdropClick keyboard={false}>
-      <Modal.Title>{title}</Modal.Title>
-      <Modal.Subtitle>Something went wrong.</Modal.Subtitle>
-      <Modal.Content>
-        <Text>Please try again.</Text>
-        <Text small>{error}</Text>
-      </Modal.Content>
-      <Modal.Action onClick={retryAction}>Try Again</Modal.Action>
-    </Modal>
   );
 }
 
