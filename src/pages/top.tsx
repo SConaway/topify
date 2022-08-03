@@ -70,7 +70,11 @@ function App() {
       return;
     }
 
-    const response = await fetch(`/api/top?accessToken=${accessToken}&period=${period}`);
+    const url = `/api/top?accessToken=${accessToken}&period=${period}`;
+
+    console.log(url);
+
+    const response = await fetch(url);
 
     if (!response.ok) {
       const error = await response.text();

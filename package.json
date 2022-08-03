@@ -1,5 +1,5 @@
 {
-  "name": "vite-reactts-eslint-prettier",
+  "name": "topify",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --port ${PORT:-5000}",
@@ -12,7 +12,8 @@
     "upgrade:yarn": "yarn set version latest",
     "upgrade": "yarn upgrade-interactive ; yarn upgrade:yarn",
     "vdev": "vercel dev",
-    "dev:vercel": "vercel dev --local-config ./vercel-dev.json"
+    "dev:vercel": "vercel dev --local-config ./vercel-dev.json",
+    "dev:spotify": "nodemon --exec 'esr --cache' --ext 'ts' lib/spotify/test.ts"
   },
   "dependencies": {
     "@geist-ui/core": "^2.3.8",
@@ -30,6 +31,7 @@
     "@typescript-eslint/parser": "^5.32.0",
     "@vercel/node": "^2.5.2",
     "@vitejs/plugin-react": "^2.0.0",
+    "esbuild-runner": "^2.2.1",
     "eslint": "^8.21.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
@@ -37,6 +39,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "nodemon": "^2.0.19",
     "pre-commit": "^1.2.2",
     "prettier": "^2.7.1",
     "typescript": "^4.7.4",
