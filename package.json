@@ -42,6 +42,7 @@
     "nodemon": "^2.0.19",
     "pre-commit": "^1.2.2",
     "prettier": "^2.7.1",
+    "rollup-plugin-visualizer": "^5.7.1",
     "typescript": "^4.7.4",
     "vercel": "^27.3.3",
     "vite": "^3.0.4",
