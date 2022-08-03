@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
 
-export type AudioFeature = {
+export type Mood = {
   danceability: number;
   energy: number;
   acousticness: number;
@@ -32,7 +32,7 @@ async function getMoods(accessToken: string, ids: string[]) {
     instrumentalness: item.instrumentalness,
     liveness: item.liveness,
     valence: item.valence,
-  })) as AudioFeature[];
+  })) as Mood[];
 }
 
 export default getMoods;

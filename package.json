@@ -13,7 +13,8 @@
     "upgrade": "yarn upgrade-interactive ; yarn upgrade:yarn",
     "vdev": "vercel dev",
     "dev:vercel": "vercel dev --local-config ./vercel-dev.json",
-    "dev:spotify": "nodemon --exec 'esr --cache' --ext 'ts' lib/spotify/test.ts"
+    "dev:spotify": "nodemon --exec 'esr --cache' --ext 'ts' lib/spotify/test.ts",
+    "check": "yarn lint && yarn type-check"
   },
   "dependencies": {
     "@geist-ui/core": "^2.3.8",

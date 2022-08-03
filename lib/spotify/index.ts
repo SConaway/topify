@@ -1,7 +1,9 @@
-import getMoods from './getMoods';
-import getTopTracks from './getTopTracks';
+import getMoods, { Mood } from './getMoods';
+import getTopTracks, { Track } from './getTopTracks';
 
 export type PeriodType = 'short_term' | 'medium_term' | 'long_term';
+
+export type TrackWithMood = Track & { mood: Mood };
 
 async function topTracksWithMood(accessToken: string, period: PeriodType) {
   let tracks = await getTopTracks(accessToken, period);
@@ -14,7 +16,47 @@ async function topTracksWithMood(accessToken: string, period: PeriodType) {
   return tracks.map((track, index) => ({
     ...track,
     mood: moods[index],
-  }));
+  })) as TrackWithMood[];
 }
 
-export default topTracksWithMood;
+function averageMood(tracks: TrackWithMood[]): Mood {
+  // add stats
+  let averageMood: Mood = tracks.reduce(
+    (acc, track) => {
+      return {
+        acousticness: acc.acousticness + track.mood.acousticness,
+        danceability: acc.danceability + track.mood.danceability,
+        energy: acc.energy + track.mood.energy,
+        instrumentalness: acc.instrumentalness + track.mood.instrumentalness,
+        liveness: acc.liveness + track.mood.liveness,
+        valence: acc.valence + track.mood.valence,
+      };
+    },
+    {
+      acousticness: 0,
+      danceability: 0,
+      energy: 0,
+      instrumentalness: 0,
+      liveness: 0,
+      valence: 0,
+    },
+  );
+
+  // divide by number of tracks
+  averageMood = {
+    acousticness: averageMood.acousticness / tracks.length,
+    danceability: averageMood.danceability / tracks.length,
+    energy: averageMood.energy / tracks.length,
+    instrumentalness: averageMood.instrumentalness / tracks.length,
+    liveness: averageMood.liveness / tracks.length,
+    valence: averageMood.valence / tracks.length,
+  };
+
+  return averageMood;
+}
+
+export default async (accessToken: string, period: PeriodType) => {
+  const tracks = await topTracksWithMood(accessToken, period);
+
+  return { tracks, averageMood: averageMood(tracks) };
+};

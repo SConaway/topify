@@ -1,4 +1,4 @@
-import { Loading, Modal, Select, Text, useModal } from '@geist-ui/core';
+import { Loading, Select, Text } from '@geist-ui/core';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -127,18 +127,23 @@ function App() {
       ) : (
         <>
           <Text h1>Topify</Text>
-          <Text>Select a period:</Text>
-          <Select
-            placeholder="Choose one"
-            value={period}
-            onChange={(newValue) => setPeriod(newValue as string)} // only one because no `multiple` prop
-          >
-            <Select.Option value="short_term">Short Term (last ~4 weeks)</Select.Option>
-            <Select.Option value="medium_term">
-              Medium Term (last ~6 months, default)
-            </Select.Option>
-            <Select.Option value="long_term">Long Term (all history)</Select.Option>
-          </Select>
+          <div>
+            <label style={{ marginRight: 10 }} htmlFor="period">
+              Select a period:
+            </label>
+            <Select
+              id="period"
+              placeholder="Choose one"
+              value={period}
+              onChange={(newValue) => setPeriod(newValue as string)} // only one because no `multiple` prop
+            >
+              <Select.Option value="short_term">Short Term (last 4 weeks)</Select.Option>
+              <Select.Option value="medium_term">
+                Medium Term (last 6 months, default)
+              </Select.Option>
+              <Select.Option value="long_term">Long Term (all history)</Select.Option>
+            </Select>
+          </div>
         </>
       )}
     </Page>
