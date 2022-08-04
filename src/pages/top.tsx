@@ -1,4 +1,4 @@
-import { Card, Grid, Loading, Progress, Select, Text } from '@geist-ui/core';
+import { Card, Grid, Loading, Select, Text } from '@geist-ui/core';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -89,6 +89,8 @@ function App() {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
+
     if (!accessToken) {
       console.log('no access token found, probably will rerun soon');
       return;
