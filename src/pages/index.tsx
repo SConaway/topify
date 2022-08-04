@@ -1,7 +1,7 @@
 import { Link, Text } from '@geist-ui/core';
 import { useEffect, useState } from 'react';
 
-import Page from '~/components/page';
+import Page from '~/components/Page';
 import genString from '~/util/genString';
 
 function App() {

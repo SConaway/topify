@@ -2,8 +2,10 @@ import { Card, Grid, Loading, Progress, Select, Text } from '@geist-ui/core';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import Error from '~/components/error';
-import Page from '~/components/page';
+import AverageMood from '~/components/AverageMood';
+import Error from '~/components/Error';
+import Page from '~/components/Page';
+import Track from '~/components/Track';
 
 function App() {
   const navigate = useNavigate();
@@ -157,65 +159,14 @@ function App() {
 
             <Text h4>Average Stats</Text>
 
-            <Grid.Container gap={8} justify="center">
-              <Grid xs={24} lg={7} alignItems="center" style={{ flexWrap: 'wrap' }}>
-                <Text mr={1}>Acousticness</Text>
-
-                <div
-                  style={{
-                    width: '100%',
-                    minWidth: 200,
-                    maxWidth: 600,
-                    marginLeft: 'auto',
-                  }}
-                >
-                  <Progress value={data.averageMood.acousticness * 100} />
-
-                  <Text small span style={{ color: '#555' }}>
-                    {Math.round(data.averageMood.acousticness * 1000) / 10} %
-                  </Text>
-                </div>
-              </Grid>
-
-              <Grid xs={24} lg={7} alignItems="center" style={{ flexWrap: 'wrap' }}>
-                <Text mr={1}>Danceability</Text>
-
-                <div
-                  style={{
-                    width: '100%',
-                    minWidth: 200,
-                    maxWidth: 600,
-                    marginLeft: 'auto',
-                  }}
-                >
-                  <Progress value={data.averageMood.danceability * 100} />
-
-                  <Text small span style={{ color: '#555' }}>
-                    {Math.round(data.averageMood.danceability * 1000) / 10} %
-                  </Text>
-                </div>
-              </Grid>
-
-              <Grid xs={24} lg={7} alignItems="center" style={{ flexWrap: 'wrap' }}>
-                <Text mr={1}>Instrumentalness</Text>
-
-                <div
-                  style={{
-                    width: '100%',
-                    minWidth: 200,
-                    maxWidth: 600,
-                    marginLeft: 'auto',
-                  }}
-                >
-                  <Progress value={data.averageMood.instrumentalness * 100} />
-
-                  <Text small span style={{ color: '#555' }}>
-                    {Math.round(data.averageMood.instrumentalness * 1000) / 10} %
-                  </Text>
-                </div>
-              </Grid>
-            </Grid.Container>
+            <AverageMood averageMood={data.averageMood} />
           </Card>
+
+          <Grid.Container gap={2}>
+            {data?.tracks?.map((track: any) => (
+              <Track track={track} key={track.id} />
+            ))}
+          </Grid.Container>
         </>
       )}
     </Page>

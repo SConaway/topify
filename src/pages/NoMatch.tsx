@@ -1,6 +1,6 @@
 import { Divider, Link, Text } from '@geist-ui/core';
 
-import Page from '~/components/page';
+import Page from '~/components/Page';
 
 function NoMatch() {
   return (
