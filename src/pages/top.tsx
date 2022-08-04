@@ -101,6 +101,27 @@ function App() {
 
   return (
     <Page>
+      <Text h1>Topify</Text>
+
+      <div>
+        <Text mr={1} span>
+          Select a period:
+        </Text>
+
+        <Select
+          id="period"
+          placeholder="Choose one"
+          value={period}
+          onChange={(newValue) => setPeriod(newValue as string)} // only one because no `multiple` prop
+        >
+          <Select.Option value="short_term">Short Term (last 4 weeks)</Select.Option>
+          <Select.Option value="medium_term">
+            Medium Term (last 6 months, default)
+          </Select.Option>
+          <Select.Option value="long_term">Long Term (all history)</Select.Option>
+        </Select>
+      </div>
+
       {authError ? (
         <>
           <Error
@@ -123,36 +144,15 @@ function App() {
         </>
       ) : (
         <>
-          <Text h1>Topify</Text>
-
-          <div>
-            <Text mr={1} span>
-              Select a period:
-            </Text>
-
-            <Select
-              id="period"
-              placeholder="Choose one"
-              value={period}
-              onChange={(newValue) => setPeriod(newValue as string)} // only one because no `multiple` prop
-            >
-              <Select.Option value="short_term">Short Term (last 4 weeks)</Select.Option>
-              <Select.Option value="medium_term">
-                Medium Term (last 6 months, default)
-              </Select.Option>
-              <Select.Option value="long_term">Long Term (all history)</Select.Option>
-            </Select>
-          </div>
-
           <Card hoverable my={1} pb={1}>
             <Text h2 style={{ textAlign: 'center' }}>
               {`${
                 data.averageMood.mainCharacteristic === 'Acousticness'
-                  ? ':guitar:'
+                  ? '🎸'
                   : data.averageMood.mainCharacteristic === 'Danceability'
-                  ? ':dance:'
-                  : ':instrument:'
-              } ${data.mainCharacteristic}`}
+                  ? '🪩'
+                  : '🎻'
+              } ${data.averageMood.mainCharacteristic}`}
             </Text>
 
             <Text h4>Average Stats</Text>
