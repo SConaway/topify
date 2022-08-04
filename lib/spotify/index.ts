@@ -1,4 +1,4 @@
-import getMoods, { Mood } from './getMoods';
+import getMoods, { Mood, getMainCharacteristic } from './getMoods';
 import getTopTracks, { Track } from './getTopTracks';
 
 export type PeriodType = 'short_term' | 'medium_term' | 'long_term';
@@ -19,7 +19,7 @@ async function topTracksWithMood(accessToken: string, period: PeriodType) {
   })) as TrackWithMood[];
 }
 
-function averageMood(tracks: TrackWithMood[]): Mood {
+function getAverageMood(tracks: TrackWithMood[]): Mood {
   // add stats
   let averageMood: Mood = tracks.reduce(
     (acc, track) => {
@@ -30,6 +30,7 @@ function averageMood(tracks: TrackWithMood[]): Mood {
         instrumentalness: acc.instrumentalness + track.mood.instrumentalness,
         liveness: acc.liveness + track.mood.liveness,
         valence: acc.valence + track.mood.valence,
+        mainCharacteristic: '',
       };
     },
     {
@@ -39,6 +40,7 @@ function averageMood(tracks: TrackWithMood[]): Mood {
       instrumentalness: 0,
       liveness: 0,
       valence: 0,
+      mainCharacteristic: '',
     },
   );
 
@@ -50,7 +52,11 @@ function averageMood(tracks: TrackWithMood[]): Mood {
     instrumentalness: averageMood.instrumentalness / tracks.length,
     liveness: averageMood.liveness / tracks.length,
     valence: averageMood.valence / tracks.length,
+    mainCharacteristic: '',
   };
+
+  // get main characteristic
+  averageMood.mainCharacteristic = getMainCharacteristic(averageMood);
 
   return averageMood;
 }
@@ -58,5 +64,10 @@ function averageMood(tracks: TrackWithMood[]): Mood {
 export default async (accessToken: string, period: PeriodType) => {
   const tracks = await topTracksWithMood(accessToken, period);
 
-  return { tracks, averageMood: averageMood(tracks) };
+  const averageMood = getAverageMood(tracks);
+
+  return {
+    tracks,
+    averageMood,
+  };
 };

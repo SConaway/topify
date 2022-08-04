@@ -1,4 +1,4 @@
-import { Loading, Select, Text } from '@geist-ui/core';
+import { Card, Grid, Loading, Progress, Select, Text } from '@geist-ui/core';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -16,19 +16,17 @@ function App() {
 
   const [period, setPeriod] = useState('medium_term');
 
+  const [data, setData] = useState<any>(null);
+
+  console.log(data);
+
   const [searchParams, _setSearchParams] = useSearchParams();
-  // let [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
 
   const handleAuth = () => {
     const successFromParams = searchParams.get('success');
     const stateFromParams = searchParams.get('state');
     const accessTokenFromParams = searchParams.get('access_token');
-    // const tokenType = searchParams.get('token_type');
-    // const expiresIn = searchParams.get('expires_in');
-    // const scope = searchParams.get('scope');
-    // const refreshToken = searchParams.get('refresh_token');
-
-    // console.log(localStorage.getItem('randomString'));
 
     if (!localStorage.getItem('randomString')) {
       console.warn('No random string found in localStorage, heading back to main page');
@@ -36,13 +34,7 @@ function App() {
       return;
     }
 
-    if (
-      !successFromParams ||
-      !stateFromParams ||
-      !accessTokenFromParams
-      // || !scope
-      // || !refreshToken
-    ) {
+    if (!successFromParams || !stateFromParams || !accessTokenFromParams) {
       const error = 'missing part of authentication';
       console.warn(error);
       setAuthError(error);
@@ -84,7 +76,8 @@ function App() {
     }
 
     const data = await response.json();
-    console.log(data);
+
+    setData(data);
 
     setLoading(false);
   };
@@ -118,7 +111,11 @@ function App() {
         </>
       ) : fetchError ? (
         <>
-          <Error error={fetchError} title="Fetch Error" retryAction={getData} />
+          <Error
+            error={fetchError}
+            title="Fetch Error"
+            retryAction={() => navigate('/')}
+          />
         </>
       ) : loading ? (
         <>
@@ -127,10 +124,12 @@ function App() {
       ) : (
         <>
           <Text h1>Topify</Text>
+
           <div>
-            <label style={{ marginRight: 10 }} htmlFor="period">
+            <Text mr={1} span>
               Select a period:
-            </label>
+            </Text>
+
             <Select
               id="period"
               placeholder="Choose one"
@@ -144,6 +143,79 @@ function App() {
               <Select.Option value="long_term">Long Term (all history)</Select.Option>
             </Select>
           </div>
+
+          <Card hoverable my={1} pb={1}>
+            <Text h2 style={{ textAlign: 'center' }}>
+              {`${
+                data.averageMood.mainCharacteristic === 'Acousticness'
+                  ? ':guitar:'
+                  : data.averageMood.mainCharacteristic === 'Danceability'
+                  ? ':dance:'
+                  : ':instrument:'
+              } ${data.mainCharacteristic}`}
+            </Text>
+
+            <Text h4>Average Stats</Text>
+
+            <Grid.Container gap={8} justify="center">
+              <Grid xs={24} lg={7} alignItems="center" style={{ flexWrap: 'wrap' }}>
+                <Text mr={1}>Acousticness</Text>
+
+                <div
+                  style={{
+                    width: '100%',
+                    minWidth: 200,
+                    maxWidth: 600,
+                    marginLeft: 'auto',
+                  }}
+                >
+                  <Progress value={data.averageMood.acousticness * 100} />
+
+                  <Text small span style={{ color: '#555' }}>
+                    {Math.round(data.averageMood.acousticness * 1000) / 10} %
+                  </Text>
+                </div>
+              </Grid>
+
+              <Grid xs={24} lg={7} alignItems="center" style={{ flexWrap: 'wrap' }}>
+                <Text mr={1}>Danceability</Text>
+
+                <div
+                  style={{
+                    width: '100%',
+                    minWidth: 200,
+                    maxWidth: 600,
+                    marginLeft: 'auto',
+                  }}
+                >
+                  <Progress value={data.averageMood.danceability * 100} />
+
+                  <Text small span style={{ color: '#555' }}>
+                    {Math.round(data.averageMood.danceability * 1000) / 10} %
+                  </Text>
+                </div>
+              </Grid>
+
+              <Grid xs={24} lg={7} alignItems="center" style={{ flexWrap: 'wrap' }}>
+                <Text mr={1}>Instrumentalness</Text>
+
+                <div
+                  style={{
+                    width: '100%',
+                    minWidth: 200,
+                    maxWidth: 600,
+                    marginLeft: 'auto',
+                  }}
+                >
+                  <Progress value={data.averageMood.instrumentalness * 100} />
+
+                  <Text small span style={{ color: '#555' }}>
+                    {Math.round(data.averageMood.instrumentalness * 1000) / 10} %
+                  </Text>
+                </div>
+              </Grid>
+            </Grid.Container>
+          </Card>
         </>
       )}
     </Page>

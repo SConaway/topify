@@ -1,5 +1,7 @@
 import fetch from 'cross-fetch';
 
+export type MainCharacteristic = 'Acousticness' | 'Danceability' | 'Instrumentalness';
+
 export type Mood = {
   danceability: number;
   energy: number;
@@ -7,7 +9,19 @@ export type Mood = {
   instrumentalness: number;
   liveness: number;
   valence: number;
+  mainCharacteristic: MainCharacteristic | '';
 };
+
+export function getMainCharacteristic(mood: Mood): MainCharacteristic {
+  const main = Object.entries(mood)
+    .filter(
+      ([k, v]: [string, any]) =>
+        k === 'acousticness' || k === 'danceability' || k === 'instrumentalness',
+    )
+    .sort((x: any, y: any) => y[1] - x[1])[0][0];
+
+  return (main.charAt(0).toUpperCase() + main.slice(1)) as MainCharacteristic;
+}
 
 async function getMoods(accessToken: string, ids: string[]) {
   const url = `https://api.spotify.com/v1/audio-features?ids=${ids.join(',')}`;
@@ -32,6 +46,7 @@ async function getMoods(accessToken: string, ids: string[]) {
     instrumentalness: item.instrumentalness,
     liveness: item.liveness,
     valence: item.valence,
+    mainCharacteristic: getMainCharacteristic(item),
   })) as Mood[];
 }
 
