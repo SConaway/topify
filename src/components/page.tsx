@@ -9,6 +9,7 @@ export default function Page({ children }: Props) {
   return (
     <_Page
       dotBackdrop
+      dotSpace={0.5}
       unit="8px"
       w="calc(100% - 50pt)"
       // style={{ width: 'calc(100% - 50pt)' }}
