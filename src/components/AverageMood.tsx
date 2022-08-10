@@ -1,5 +1,7 @@
 import { Grid, Progress, Text, Tooltip } from '@geist-ui/core';
+// @ts-ignore
 import Info from '@geist-ui/icons/Info';
+// can't find module issue
 
 function Item({
   label,
