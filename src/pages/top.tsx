@@ -151,9 +151,9 @@ function App() {
           <Card hoverable my={1} pb={1}>
             <Text h2 style={{ textAlign: 'center' }}>
               {`${
-                data.averageMood.mainCharacteristic === 'Acousticness'
+                data.averageMood.mainCharacteristic === 'Acoustic'
                   ? '🎸'
-                  : data.averageMood.mainCharacteristic === 'Danceability'
+                  : data.averageMood.mainCharacteristic === 'Danceable'
                   ? '🪩'
                   : '🎻'
               } ${data.averageMood.mainCharacteristic}`}

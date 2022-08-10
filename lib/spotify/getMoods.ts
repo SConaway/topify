@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
 
-export type MainCharacteristic = 'Acousticness' | 'Danceability' | 'Instrumentalness';
+export type MainCharacteristic = 'Acoustic' | 'Danceable' | 'Instrumental';
 
 export type Mood = {
   danceability: number;
@@ -20,7 +20,18 @@ export function getMainCharacteristic(mood: Mood): MainCharacteristic {
     )
     .sort((x: any, y: any) => y[1] - x[1])[0][0];
 
-  return (main.charAt(0).toUpperCase() + main.slice(1)) as MainCharacteristic;
+  switch (main) {
+    case 'acousticness':
+      return 'Acoustic';
+    case 'danceability':
+      return 'Danceable';
+    case 'instrumentalness':
+      return 'Instrumental';
+    default:
+      return '';
+  }
+
+  // return (main.charAt(0).toUpperCase() + main.slice(1)) as MainCharacteristic;
 }
 
 async function getMoods(accessToken: string, ids: string[]) {

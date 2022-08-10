@@ -46,16 +46,12 @@ export default async (request: VercelRequest, response: VercelResponse) => {
 
   let resParams = new URLSearchParams({
     success: 'true',
+    state: state as string,
+    access_token: json.access_token,
+    // expires_in: json.expires_in,
   });
 
-  if (state && typeof state === 'string') {
-    resParams.append('state', state);
-  }
-
-  // add each key in json to resParams
-  for (const key in json) {
-    resParams.append(key, json[key as keyof SpotifyAuthResponse]);
-  }
+  console.log(resParams.toString());
 
   response.redirect('/top?' + resParams.toString());
 };
