@@ -416,6 +416,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@geist-ui/icons@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@geist-ui/icons@npm:1.0.2"
+  peerDependencies:
+    "@geist-ui/core": ">=1.0.0"
+    react: ">=16.13.0"
+  checksum: 9580a4f09e1cda2f05cbce3ad053b8719a691a8e804f6a1d330f10d7814ae7d49e4b2081d5372c6d5067bd32b2e84cbe96ebcb8727529965c68043483408c2ef
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.10.4":
   version: 0.10.4
   resolution: "@humanwhocodes/config-array@npm:0.10.4"
@@ -5447,6 +5457,7 @@ __metadata:
   resolution: "topify@workspace:."
   dependencies:
     "@geist-ui/core": ^2.3.8
+    "@geist-ui/icons": ^1.0.2
     "@types/node": ^18.7.1
     "@types/react": ^18.0.17
     "@types/react-dom": ^18.0.6

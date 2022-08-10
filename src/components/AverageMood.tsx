@@ -1,9 +1,30 @@
-import { Grid, Progress, Text } from '@geist-ui/core';
+import { Grid, Progress, Text, Tooltip } from '@geist-ui/core';
+import Info from '@geist-ui/icons/Info';
 
-function Item({ label, value }: { label: string; value: number }) {
+function Item({
+  label,
+  description,
+  value,
+}: {
+  label: string;
+  description?: string;
+  value: number;
+}) {
   return (
-    <Grid xs={24} lg={7} alignItems="center" style={{ flexWrap: 'wrap' }}>
-      <Text mr={1}>{label}</Text>
+    <Grid xs={24} lg={6} alignItems="center" style={{ flexWrap: 'wrap' }}>
+      {/* <Text mr={1}>{label}</Text> */}
+
+      <Text small>
+        {label}{' '}
+        {description && (
+          <Tooltip text={description} placement="right">
+            <Info
+              // style={{ marginLeft: '0.5rem' }}
+              size="1em"
+            />
+          </Tooltip>
+        )}
+      </Text>
 
       <div
         style={{
@@ -22,7 +43,13 @@ function Item({ label, value }: { label: string; value: number }) {
 
 function AverageMood({ averageMood }: { averageMood: any }) {
   return (
-    <Grid.Container gap={8} justify="center">
+    <Grid.Container gap={3} justify="center">
+      <Item
+        label="Valence"
+        value={averageMood.valence}
+        description="Spotify's metric of a song's happiness."
+      />
+
       <Item label="Acousticness" value={averageMood.acousticness} />
 
       <Item label="Danceability" value={averageMood.danceability} />

@@ -1,6 +1,6 @@
 import { Card, Grid, Image, Progress, Text } from '@geist-ui/core';
 
-function Track({ track }: { track: any }) {
+function Track({ track, index }: { track: any; index: number }) {
   return (
     <Grid xs={24} sm={12} lg={8} xl={6} key={track.id}>
       <Card width="100%" hoverable>
@@ -28,7 +28,7 @@ function Track({ track }: { track: any }) {
           <Grid xs={16} style={{ display: 'flex', flexDirection: 'column' }}>
             <div>
               <Text h4 my={0} style={{ textTransform: 'capitalize' }}>
-                {track.name}
+                {index + 1}. {track.name}
               </Text>
               <Text small>
                 {track.artists.map((artist: any) => artist.name).join(', ')}
@@ -37,6 +37,10 @@ function Track({ track }: { track: any }) {
 
             <hr style={{ width: '75%' }} />
 
+            <div>
+              <Text small>Valence</Text>
+              <Progress value={track.mood.valence * 100} />
+            </div>
             <div>
               <Text small>Acousticness</Text>
               <Progress value={track.mood.acousticness * 100} />

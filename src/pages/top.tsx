@@ -165,8 +165,8 @@ function App() {
           </Card>
 
           <Grid.Container gap={2}>
-            {data?.tracks?.map((track: any) => (
-              <Track track={track} key={track.id} />
+            {data?.tracks?.map((track: any, index: number) => (
+              <Track track={track} key={track.id} index={index} />
             ))}
           </Grid.Container>
         </>
