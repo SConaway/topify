@@ -18,14 +18,6 @@ function NoMatch() {
         </Link>
         .
       </Text>
-
-      <Text>
-        Or, if you've already signed in, head right to the app:{' '}
-        <Link href="/top" color underline>
-          Topify
-        </Link>
-        .
-      </Text>
     </Page>
   );
 }

@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
 
-export type MainCharacteristic = 'Acoustic' | 'Danceable' | 'Instrumental';
+export type MainCharacteristic = 'Acoustic' | 'Danceable' | 'Instrumental' | '';
 
 export type Mood = {
   danceability: number;
@@ -9,7 +9,7 @@ export type Mood = {
   instrumentalness: number;
   liveness: number;
   valence: number;
-  mainCharacteristic: MainCharacteristic | '';
+  mainCharacteristic: MainCharacteristic;
 };
 
 export function getMainCharacteristic(mood: Mood): MainCharacteristic {
