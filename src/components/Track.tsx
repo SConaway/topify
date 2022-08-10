@@ -2,7 +2,7 @@ import { Card, Grid, Image, Progress, Text } from '@geist-ui/core';
 
 function Track({ track, index }: { track: any; index: number }) {
   return (
-    <Grid xs={24} sm={12} lg={8} xl={6} key={track.id}>
+    <Grid xs={24} md={12} lg={8} xl={6} key={track.id}>
       <Card width="100%" hoverable>
         <Grid.Container gap={2} alignItems="center">
           <Grid xs={8}>
