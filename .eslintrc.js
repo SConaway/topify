@@ -58,6 +58,5 @@ module.exports = {
         caughtErrorsIgnorePattern: '^_',
       },
     ],
-    '@typescript-eslint/ban-ts-comment': 'off',
   },
 };
