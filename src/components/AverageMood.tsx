@@ -47,14 +47,18 @@ function AverageMood({ averageMood }: { averageMood: any }) {
       <Item
         label="Valence"
         value={averageMood.valence}
-        description="Spotify's metric of a song's happiness."
+        description="Whether or not a song is upbeat."
       />
 
       <Item label="Acousticness" value={averageMood.acousticness} />
 
       <Item label="Danceability" value={averageMood.danceability} />
 
-      <Item label="Instrumentalness" value={averageMood.instrumentalness} />
+      <Item
+        label="Instrumentalness"
+        value={averageMood.instrumentalness}
+        description="Amount of song that is mostly instrumental"
+      />
     </Grid.Container>
   );
 }
