@@ -34,7 +34,7 @@ function Item({
         <Progress value={value * 100} />
 
         <Text small span style={{ color: '#555' }}>
-          {Math.round(value * 1000) / 10} %
+          {Math.round(value * 1000) / 10}%
         </Text>
       </div>
     </Grid>

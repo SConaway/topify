@@ -1,5 +1,24 @@
 import { Card, Grid, Image, Progress, Text } from '@geist-ui/core';
 
+interface MoodProps {
+  label: string;
+  value: number;
+}
+
+function Mood({ label, value }: MoodProps) {
+  return (
+    <div>
+      <Text small>
+        {label}{' '}
+        <Text small span style={{ color: '#555' }}>
+          — {Math.round(value * 1000) / 10}%
+        </Text>
+      </Text>
+      <Progress value={value * 100} />
+    </div>
+  );
+}
+
 function Track({ track, index }: { track: any; index: number }) {
   return (
     <Grid xs={24} md={12} lg={8} xl={6} key={track.id}>
@@ -37,22 +56,10 @@ function Track({ track, index }: { track: any; index: number }) {
 
             <hr style={{ width: '75%' }} />
 
-            <div>
-              <Text small>Valence</Text>
-              <Progress value={track.mood.valence * 100} />
-            </div>
-            <div>
-              <Text small>Acousticness</Text>
-              <Progress value={track.mood.acousticness * 100} />
-            </div>
-            <div>
-              <Text small>Danceability</Text>
-              <Progress value={track.mood.danceability * 100} />
-            </div>
-            <div>
-              <Text small>Instrumentalness</Text>
-              <Progress value={track.mood.instrumentalness * 100} />
-            </div>
+            <Mood label="Valence" value={track.mood.valence} />
+            <Mood label="Acousticness" value={track.mood.acousticness} />
+            <Mood label="Danceability" value={track.mood.danceability} />
+            <Mood label="Instrumentalness" value={track.mood.instrumentalness} />
           </Grid>
         </Grid.Container>
       </Card>
