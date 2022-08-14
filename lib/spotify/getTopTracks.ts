@@ -16,6 +16,9 @@ export type Track = {
       height: number;
     }[];
   };
+  external_urls: {
+    spotify: string;
+  };
 };
 
 async function getTopTracks(
@@ -37,6 +40,8 @@ async function getTopTracks(
     throw new Error(json.error.message);
   }
 
+  console.log(JSON.stringify(json, null, 2));
+
   return json.items
     .filter((item: any) => !item.is_local)
     .map((item: any) => ({
@@ -55,6 +60,9 @@ async function getTopTracks(
           width: image.width,
           height: image.height,
         })),
+      },
+      external_urls: {
+        spotify: item.external_urls.spotify,
       },
     })) as Track[];
 }

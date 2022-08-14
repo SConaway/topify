@@ -1,4 +1,4 @@
-import { Card, Grid, Image, Progress, Text } from '@geist-ui/core';
+import { Card, Grid, Image, Link, Progress, Text } from '@geist-ui/core';
 
 interface MoodProps {
   label: string;
@@ -22,31 +22,47 @@ function Mood({ label, value }: MoodProps) {
 function Track({ track, index }: { track: any; index: number }) {
   return (
     <Grid xs={24} md={12} lg={8} xl={6} key={track.id}>
+      <style>
+        {`
+          .image.track-image {
+            border-radius: 0;
+          }
+
+          h4 > a.link > svg.icon {
+            width: 0.5em;
+          }
+        `}
+      </style>
+
       <Card width="100%" hoverable>
         <Grid.Container gap={2} alignItems="center">
           <Grid xs={8}>
             <div>
-              <style>
-                {`
-                  .image.track-image {
-                    border-radius: 0;
-                  }
-                `}
-              </style>
-              <Image
-                src={track.album.images[0].url}
-                alt={track.name}
-                className="track-image"
-                style={{
-                  border: '1px solid #eee',
-                }}
-              />
+              <a href={track.external_urls.spotify}>
+                <Image
+                  src={track.album.images[0].url}
+                  alt={track.name}
+                  className="track-image"
+                  style={{
+                    border: '1px solid #eee',
+                  }}
+                />
+              </a>
+
+              <Text small>
+                <Link href={track.external_urls.spotify} icon color underline>
+                  Open in Spotify
+                </Link>
+              </Text>
             </div>
           </Grid>
           <Grid xs={16} style={{ display: 'flex', flexDirection: 'column' }}>
             <div>
               <Text h4 my={0} style={{ textTransform: 'capitalize' }}>
-                {index + 1}. {track.name}
+                {index + 1}.{' '}
+                <Link icon href={track.external_urls.spotify}>
+                  {track.name}
+                </Link>
               </Text>
               <Text small>
                 {track.artists.map((artist: any) => artist.name).join(', ')}

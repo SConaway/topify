@@ -117,6 +117,7 @@ function App() {
           placeholder="Choose one"
           value={period}
           onChange={(newValue) => setPeriod(newValue as string)} // only one because no `multiple` prop
+          mb={1}
         >
           <Select.Option value="short_term">Short Term (last 4 weeks)</Select.Option>
           <Select.Option value="medium_term">
@@ -148,7 +149,7 @@ function App() {
         </>
       ) : (
         <>
-          <Card hoverable my={1} pb={1}>
+          <Card hoverable mb={1} pb={1}>
             <Text h2 style={{ textAlign: 'center' }}>
               {`${
                 data.averageMood.mainCharacteristic === 'Acoustic'
