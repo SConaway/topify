@@ -26,22 +26,21 @@ function Track({ track, index }: { track: any; index: number }) {
         <Grid.Container gap={2} alignItems="center">
           <Grid xs={8}>
             <div>
+              <style>
+                {`
+                  .image.track-image {
+                    border-radius: 0;
+                  }
+                `}
+              </style>
               <Image
                 src={track.album.images[0].url}
                 alt={track.name}
+                className="track-image"
                 style={{
                   border: '1px solid #eee',
-                  borderRadius: '8px',
                 }}
               />
-              {/* <img
-                src={track.album.images[0].url}
-                alt={track.name}
-                style={{
-                  border: '1px solid #eee',
-                  borderRadius: '8px',
-                }}
-              /> */}
             </div>
           </Grid>
           <Grid xs={16} style={{ display: 'flex', flexDirection: 'column' }}>
