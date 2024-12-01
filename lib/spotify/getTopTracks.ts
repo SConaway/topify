@@ -43,7 +43,7 @@ async function getTopTracks(
   console.log(JSON.stringify(json, null, 2));
 
   return json.items
-    .filter((item: any) => !item.is_local)
+    .filter((item: object) => !item.is_local)
     .map((item: any) => ({
       // remove many fields from the response
       id: item.id,

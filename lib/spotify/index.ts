@@ -1,4 +1,4 @@
-import getMoods, { Mood, getMainCharacteristic } from './getMoods';
+import getMoods, { getMainCharacteristic, Mood } from './getMoods';
 import getTopTracks, { Track } from './getTopTracks';
 
 export type PeriodType = 'short_term' | 'medium_term' | 'long_term';
@@ -6,7 +6,7 @@ export type PeriodType = 'short_term' | 'medium_term' | 'long_term';
 export type TrackWithMood = Track & { mood: Mood };
 
 async function topTracksWithMood(accessToken: string, period: PeriodType) {
-  let tracks = await getTopTracks(accessToken, period);
+  const tracks = await getTopTracks(accessToken, period);
 
   const moods = await getMoods(
     accessToken,

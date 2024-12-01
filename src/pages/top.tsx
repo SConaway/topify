@@ -22,7 +22,7 @@ function App() {
 
   console.log(data);
 
-  const [searchParams, _setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   // const [searchParams, setSearchParams] = useSearchParams();
 
   const handleAuth = () => {
@@ -112,6 +112,7 @@ function App() {
           Select a period:
         </Text>
 
+        {/* @ts-expect-error complains about missing props */}
         <Select
           id="period"
           placeholder="Choose one"
@@ -155,8 +156,8 @@ function App() {
                 data.averageMood.mainCharacteristic === 'Acoustic'
                   ? '🎸'
                   : data.averageMood.mainCharacteristic === 'Danceable'
-                  ? '🪩'
-                  : '🎻'
+                    ? '🪩'
+                    : '🎻'
               } ${data.averageMood.mainCharacteristic}`}
             </Text>
 

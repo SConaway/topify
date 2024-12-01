@@ -19,6 +19,7 @@ function Error({
         <Text>Please try again.</Text>
         <Text small>{error}</Text>
       </Modal.Content>
+      {/* @ts-expect-error complains about missing props */}
       <Modal.Action onClick={retryAction}>Try Again</Modal.Action>
     </Modal>
   );
