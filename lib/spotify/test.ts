@@ -1,8 +1,8 @@
-import topTracksWithMood from '.';
+import topTracksWithMood from './index.js';
 
 const run = async () => {
   const accessToken =
-    'BQDwPm3339wGMkX4vc25_D9W-J8VzyBsJEZd6HRo9NbOmgb2hgn_UPONXzdri8H3nt2NqqhRxDMGPBQbPuWjCE_JFJbQe76wk4J4AjqfahaZjN88cV6FHNj3xQKuhp_LDQPkIXt47pAOEZh3tz-qgM_afdOdMtHId7nqoXNQlnSfWW0j7ztDstFj';
+    'BQAb_iCJskQBAl33VaLcFjQXWdbuA8xErY0urCbAliS0BG_1JGMqRnK5KkGxjEL9nq10gI6YIAIh7dqn__AjsKr4xxbOqceZxhPtvplJZeYwkS0yqAO9AcXRlfBGwsEjZ2P91A3y2aA3dNqvKdI528eo_bUeQjB-pLfeO96WSoJphUxcAPXvEPqRUTrVaxR1';
   const period = 'short_term';
 
   const result = await topTracksWithMood(accessToken, period);
