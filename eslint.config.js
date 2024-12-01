@@ -33,5 +33,10 @@ export default tseslint.config(
       'simple-import-sort/exports': 'error',
     },
   },
+  {
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
   eslintPluginPrettierRecommended,
 );

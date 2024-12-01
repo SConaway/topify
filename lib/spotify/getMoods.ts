@@ -11,27 +11,24 @@ export type Mood = {
   valence: number;
   mainCharacteristic: MainCharacteristic;
 };
-
 export function getMainCharacteristic(mood: Mood): MainCharacteristic {
-  const main = Object.entries(mood)
-    .filter(
-      ([k, v]: [string, any]) =>
-        k === 'acousticness' || k === 'danceability' || k === 'instrumentalness',
-    )
-    .sort((x: any, y: any) => y[1] - x[1])[0][0];
+  const relevantKeys: Array<keyof Mood> = [
+    'acousticness',
+    'danceability',
+    'instrumentalness',
+  ];
 
-  switch (main) {
-    case 'acousticness':
-      return 'Acoustic';
-    case 'danceability':
-      return 'Danceable';
-    case 'instrumentalness':
-      return 'Instrumental';
-    default:
-      return '';
-  }
+  const main = (
+    relevantKeys.map((key) => [key, mood[key]] as const) as Array<[keyof Mood, number]>
+  ).sort(([, valueA], [, valueB]) => valueB - valueA)[0][0];
 
-  // return (main.charAt(0).toUpperCase() + main.slice(1)) as MainCharacteristic;
+  return (
+    {
+      acousticness: 'Acoustic',
+      danceability: 'Danceable',
+      instrumentalness: 'Instrumental',
+    }[main] || ''
+  );
 }
 
 async function getMoods(accessToken: string, ids: string[]) {

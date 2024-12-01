@@ -22,7 +22,7 @@ function App() {
 
   console.log(data);
 
-  const [searchParams, _setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   // const [searchParams, setSearchParams] = useSearchParams();
 
   const handleAuth = () => {
