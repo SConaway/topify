@@ -21,6 +21,7 @@ function App() {
       <Text h1>Topify</Text>
       {/* TODO: add description here */}
       <Text>To get started, head to the next page:</Text>
+      {/* @ts-expect-error complains about missing props */}
       <Link href={`/api/spotifyLogin?id=${randomString}`} icon color underline block>
         Sign In with Spotify
       </Link>

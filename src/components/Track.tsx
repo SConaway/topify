@@ -50,6 +50,7 @@ function Track({ track, index }: { track: any; index: number }) {
               </a>
 
               <Text small>
+                {/* @ts-expect-error complains about missing props */}
                 <Link href={track.external_urls.spotify} icon color underline>
                   Open in Spotify
                 </Link>
@@ -59,7 +60,7 @@ function Track({ track, index }: { track: any; index: number }) {
           <Grid xs={16} style={{ display: 'flex', flexDirection: 'column' }}>
             <div>
               <Text h4 my={0} style={{ textTransform: 'capitalize' }}>
-                {index + 1}.{' '}
+                {index + 1}. {/* @ts-expect-error complains about missing props */}
                 <Link icon href={track.external_urls.spotify}>
                   {track.name}
                 </Link>

@@ -12,7 +12,7 @@ function NoMatch() {
       <Divider />
 
       <Text>
-        Go back to the{' '}
+        Go back to the {/* @ts-expect-error complains about missing props */}
         <Link href="/" color underline>
           home page
         </Link>
