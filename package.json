@@ -2,6 +2,7 @@
   "name": "topify",
   "version": "0.0.0",
   "scripts": {
+    "postinstall": "husky",
     "dev": "vite --port ${PORT:-5000}",
     "build": "tsc && vite build",
     "serve": "vite preview",
@@ -19,11 +20,11 @@
   "dependencies": {
     "@geist-ui/core": "^2.3.8",
     "@geist-ui/icons": "^1.0.2",
-    "cross-fetch": "^3.1.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router": "^6.3.0",
-    "react-router-dom": "^6.3.0"
+    "cross-fetch": "^4.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router": "^7.0.1",
+    "react-router-dom": "^7.0.1"
   },
   "devDependencies": {
     "@types/node": "^18.7.1",
@@ -41,8 +42,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "husky": "^9.1.7",
     "nodemon": "^2.0.19",
-    "pre-commit": "^1.2.2",
     "prettier": "^2.7.1",
     "rollup-plugin-visualizer": "^5.7.1",
     "typescript": "^4.7.4",
@@ -50,7 +51,6 @@
     "vite": "^3.0.5",
     "vite-tsconfig-paths": "^3.5.0"
   },
-  "pre-commit": "lint",
   "license": "MIT",
-  "packageManager": "yarn@3.2.2"
+  "packageManager": "yarn@4.5.3"
 }
