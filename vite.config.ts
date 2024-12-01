@@ -5,13 +5,11 @@ import vercel from 'vite-plugin-vercel';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    vercel({ rewrites: [{ source: '/top', destination: '/index.html' }] }),
-  ],
+  plugins: [react(), vercel()],
   resolve: {
     alias: {
       '~': path.resolve(__dirname, './src'),
     },
   },
+  vercel: { rewrites: [{ source: '/top', destination: '/index.html' }] },
 });
