@@ -15,8 +15,6 @@ function App() {
     <GeistProvider>
       <CssBaseline />
       <BrowserRouter>
-        {/* <RouteWrapper /> */}
-
         <Routes>
           <Route
             path="/"

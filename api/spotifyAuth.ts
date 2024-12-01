@@ -1,5 +1,4 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-
 import fetch from 'cross-fetch';
 
 interface SpotifyAuthResponseFailure {
@@ -44,7 +43,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     return;
   }
 
-  let resParams = new URLSearchParams({
+  const resParams = new URLSearchParams({
     success: 'true',
     state: state as string,
     access_token: json.access_token,

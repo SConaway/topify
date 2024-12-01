@@ -155,8 +155,8 @@ function App() {
                 data.averageMood.mainCharacteristic === 'Acoustic'
                   ? '🎸'
                   : data.averageMood.mainCharacteristic === 'Danceable'
-                  ? '🪩'
-                  : '🎻'
+                    ? '🪩'
+                    : '🎻'
               } ${data.averageMood.mainCharacteristic}`}
             </Text>
 
